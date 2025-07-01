@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ru">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>MERCK Калькулятор топлива</title>
+		<link
+			rel="stylesheet"
+			href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css"
+		/>
+	</head>
+	<body>
+		<div class="container calculator-container">
+			<div class="calculator-right">
+				<h1 class="calculator-title">Калькулятор тарифов</h1>
+
+				<!-- Регион -->
+				<div class="calculator-section calculator-regions calculator-select">
+					<span>Укажите регион передвижения</span>
+					<div class="custom-select">
+						<div class="dropdown">
+							<button
+								disabled
+								class="dropdown-toggle dropdown-trigger"
+								type="button"
+								id="region-dropdown-trigger"
+								data-bs-toggle="dropdown"
+								aria-expanded="false"
+							>
+								Загрузка регионов...
+							</button>
+							<ul
+								id="region-dropdown"
+								class="dropdown-menu"
+								aria-labelledby="region-dropdown-trigger"
+							></ul>
+						</div>
+					</div>
+				</div>
+
+				<!-- Прокачка -->
+				<div class="calculator-pump__wrapper">
+					<div class="calculator-section calculator-pump">
+						<span>Прокачка</span>
+						<div class="calculator-pump__value">
+							<span id="pumpValue">100</span> тонн
+						</div>
+					</div>
+					<div class="range-container">
+						<input
+							type="range"
+							class=""
+							id="pumpRange"
+							min="0"
+							max="1200"
+							step="10"
+							value="100"
+						/>
+						<div class="range-labels">
+							<div><span>0</span> тонн</div>
+							<div><span id="middlePumpValue">600</span> тонн</div>
+							<div><span id="maxPumpValue">1200</span> тонн</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Тип топлива -->
+				<div class="calculator-fuel">
+					<div class="btn-group fuel-type" role="group">
+						<!-- Динамически заполняется -->
+					</div>
+				</div>
+
+				<!-- Бренд топлива -->
+				<div class="calculator-brands__wrapper">
+					<h2 class="calculator-section__title">Укажите любимый бренд</h2>
+					<div class="calculator-section calculator-brands calculator-select">
+						<div class="custom-select">
+							<div class="dropdown">
+								<button
+									disabled
+									class="dropdown-toggle dropdown-trigger"
+									type="button"
+									id="brand-dropdown-trigger"
+									data-bs-toggle="dropdown"
+									aria-expanded="false"
+								>
+									Загрузка брендов...
+								</button>
+								<ul
+									id="brand-dropdown"
+									class="dropdown-menu"
+									aria-labelledby="brand-dropdown-trigger"
+								></ul>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Дополнительные услуги -->
+				<div class="calculator-services__wrapper">
+					<h2 class="calculator-section__title">Дополнительные услуги</h2>
+					<div class="calculator-services">
+						<div class="services-container">
+							<!-- Динамически заполняется -->
+						</div>
+						<div class="services-counter">
+							<span id="selectedServicesCount">0</span>/4
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="calculator-left">
+				<!-- Тариф -->
+				<div class="calculator-section calculator-tariff">
+					<div class="calculator-tariff__title">
+						<span>Подходящий тариф</span>
+						<p id="tariffName">
+							<i class="bi bi-star-fill"></i>
+							<span>Загрузка...</span>
+						</p>
+					</div>
+					<img
+						class="calculator-tariff__img"
+						src="./assets/images/card.jpg"
+						alt="card"
+						height="326"
+					/>
+					<a href="#" class="calculator-tariff__map">
+						<i class="bi bi-geo-alt"></i>
+						<span>Сеть АЗС на карте </span>
+					</a>
+				</div>
+
+				<!-- Промо-акция -->
+				<div class="calculator-section calculator-promo">
+					<h2 class="calculator-promo__title">
+						Выберите промо<i class="bi bi-dash"></i>акцию:
+					</h2>
+					<div class="promo-container">
+						<!-- Динамически заполняется -->
+					</div>
+				</div>
+
+				<!-- Ваша экономия -->
+				<div class="calculator-section calculator-savings">
+					<div class="calculator-savings__inner">
+						<h2>Ваша экономия:</h2>
+						<div class="calculator-savings__card">
+							<p>экономия в год</p>
+							<span>от <span id="yearlySavings">—</span></span>
+						</div>
+						<div class="calculator-savings__card">
+							<p>экономия в месяц</p>
+							<span>от <span id="monthlySavings">—</span></span>
+						</div>
+					</div>
+				</div>
+
+				<!-- Кнопка заказа -->
+				<div class="order-button__container">
+					<button
+						disabled
+						class="btn btn-lg"
+						id="orderButton"
+						data-bs-toggle="modal"
+						data-bs-target="#orderModal"
+					>
+						Загрузка...
+					</button>
+				</div>
+			</div>
+		</div>
+
+		<!-- Модальное окно -->
+		<div
+			class="modal fade order-modal"
+			id="orderModal"
+			tabindex="-1"
+			aria-labelledby="orderModalLabel"
+			aria-hidden="true"
+		>
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button
+							type="button"
+							class="btn-close"
+							data-bs-dismiss="modal"
+							aria-label="Close"
+						></button>
+					</div>
+					<div class="modal-body">
+						<h2 class="order-modal__title">
+							Заказать тариф<br />
+							«Избранный»
+						</h2>
+						<form id="orderForm">
+							<div class="mb-3">
+								<input
+									type="text"
+									class="form-control"
+									id="inn"
+									required
+									pattern="\d{12}"
+									title="ИНН должен содержать ровно 12 цифр"
+									placeholder="Номер ИНН"
+								/>
+								<div class="invalid-feedback">
+									Пожалуйста, введите корректный ИНН (ровно 12 цифр)
+								</div>
+							</div>
+							<div class="mb-3">
+								<input
+									type="tel"
+									class="form-control"
+									id="phone"
+									required
+									pattern="\d{11}"
+									title="Телефон должен содержать ровно 11 цифр"
+									placeholder="Телефон для связи"
+								/>
+								<div class="invalid-feedback">
+									Пожалуйста, введите корректный телефон (ровно 11 цифр)
+								</div>
+							</div>
+							<div class="mb-5">
+								<input
+									type="email"
+									class="form-control"
+									id="email"
+									required
+									placeholder="E-mail для связи"
+								/>
+								<div class="invalid-feedback">
+									Пожалуйста, введите корректный email
+								</div>
+							</div>
+							<div class="form-check">
+								<input
+									type="checkbox"
+									class="form-check-input"
+									id="agree"
+									required
+								/>
+								<label class="form-check-label" for="agree"
+									>Согласен с обработкой персональных данных</label
+								>
+								<div class="invalid-feedback">Необходимо ваше согласие</div>
+							</div>
+							<div id="formMessage"></div>
+							<button
+								id="orderModalButton"
+								type="submit"
+								class="btn btn-lg order-modal__btn"
+							>
+								Загрузка...
+							</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
